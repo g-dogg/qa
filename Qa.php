@@ -15,4 +15,21 @@ class Qa
 		$this->db = $db;
 		$this->validator = $validator;
 	}
+
+	public function showPosts()
+	{
+		$query = 'SELECT* FROM qa.posts WHERE status = :status';
+		$stmt = $this->db->prepare($query);
+		$stmt->execute(['status'=>1]);
+		while($row = $stmt->fetch())
+		{
+			echo $row['theme'];
+			echo "<br>", $row['text'];
+		}
+	}
+
+	public function saveNewPost()
+	{
+
+	}
 }
