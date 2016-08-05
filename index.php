@@ -29,7 +29,7 @@
         			<div class="input-field col s6">
         				<i class="material-icons prefix">email</i>
           				<input id="email" type="email" class="validate" name="email">
-          				<label for="email">Email*</label>
+          				<label for="email" data-error="wrong" data-success="right">Email*</label>
         			</div>
         			<div class="input-field col s12">
         				<i class="material-icons prefix">mode_edit</i>

@@ -4,6 +4,7 @@ class Qa
 {
 	private $db;
 	private $validator;
+	private $data = [];
 
 	/**
 	 * [__construct description]
@@ -28,8 +29,44 @@ class Qa
 		}
 	}
 
+	public function isUserExists()
+	{
+		$query = 'SELECT COUNT(*) FROM qa.users WHERE username = :username LIMIT 1';
+		$stmt = $this->db->prepare($query, PDO::FETCH_ASSOC);
+		$stmt->execute(['username'=>$this->validator->getValidUsername]);
+		if(1 === $stmt->fetch())
+		{
+			return TRUE;
+		}
+		return FALSE;
+	}
+
 	public function saveNewPost()
 	{
+		$userQuery = 'INSERT INTO qa.users ('username') VALUES (':username')';
+		$questionQuery = 'INSERT INTO qa.posts ('theme', 'text', 'userid') VALUES ()';
 
+		if(FALSE === $this->isUserExists())
+		{
+			$this->data['message'] = 'Клиент с таким именем существует';
+			return $this->data;
+		}
+		else
+		{
+			$stmt = $this->db->prepare($userQuery);
+
+			try
+			{
+				$stmt->execute(['username'=>$this->validator->getValidUsername]);
+			}
+			catch (Exception $e)
+			{
+				echo $e;
+			}
+
+			$this->data['message'] = 'Ваш запрос отправлен'
+		}
+
+		echo json_encode($this->data);
 	}
 }

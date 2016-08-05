@@ -28,4 +28,9 @@ class Validator
 	{
 		return $this->validatedData;
 	}
+
+	public function getValidUsername()
+	{
+		return$this->validatedData['username'];
+	}
 }
