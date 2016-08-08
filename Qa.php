@@ -43,8 +43,10 @@ class Qa
 
 	public function saveNewPost()
 	{
-		$userQuery = 'INSERT INTO qa.users ('username') VALUES (':username')';
-		$questionQuery = 'INSERT INTO qa.posts ('theme', 'text', 'userid') VALUES ()';
+		$userQuery = "INSERT INTO qa.users ( 'username', 'email') VALUES (:username, :email)";
+		$questionQuery = "INSERT INTO qa.auestions ('theme', 'text', 'userid') VALUES (:theme, :text, :userid)";
+
+		$userValidData = $this->validator->getValidatedData;
 
 		if(FALSE === $this->isUserExists())
 		{
@@ -53,18 +55,33 @@ class Qa
 		}
 		else
 		{
-			$stmt = $this->db->prepare($userQuery);
+			$stmt1 = $this->db->prepare($userQuery);
 
 			try
 			{
-				$stmt->execute(['username'=>$this->validator->getValidUsername]);
+				$stmt1->execute(['username'=>$userValidData['username'], 'email'=>$userValidData['email']]);
+				$lastUserId = $this->db->lastInsertId();
+
 			}
 			catch (Exception $e)
 			{
 				echo $e;
 			}
 
-			$this->data['message'] = 'Ваш запрос отправлен'
+			$stmt2 = $this->db->prepare($questionQuery);
+
+			try
+			{
+				$stmt2->execute(['theme'=>$userValidData['theme'], 'text'=>$userValidData['text'], 'userid'=>$lastUserId]);
+
+			}
+			catch (Exception $e)
+			{
+				echo $e;
+			}
+
+
+			$this->data['message'] = 'Ваш запрос отправлен';
 		}
 
 		echo json_encode($this->data);

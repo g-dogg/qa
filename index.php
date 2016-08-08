@@ -17,57 +17,71 @@
         <link rel="stylesheet" href="css/media.css">
 </head>
 <body>
-<div class="container">
-	<div class="row">
-		<form class="col s12">
-      		<div class="row">
-        			<div class="input-field col s6">
-          				<i class="material-icons prefix">account_circle</i>
-          				<input id="icon_prefix" type="text" class="validate" name="username">
-          				<label for="icon_prefix">First Name*</label>
-        			</div>
-        			<div class="input-field col s6">
-        				<i class="material-icons prefix">email</i>
-          				<input id="email" type="email" class="validate" name="email">
-          				<label for="email" data-error="wrong" data-success="right">Email*</label>
-        			</div>
-        			<div class="input-field col s12">
-        				<i class="material-icons prefix">mode_edit</i>
-          				<input id="text" type="text" class="validate" name="theme">
-          				<label for="text">Заголовок*</label>
-        			</div>
-        			<div class="input-field col s12">
-        				<i class="material-icons prefix">mode_edit</i>
-        				<textarea id="textarea1" class="materialize-textarea" name="text"></textarea>
-          				<label for="textarea1">Textarea*</label>
-        			</div>
-        			 <p>
-      				<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
-      				<label for="filled-in-box">Filled in</label>
-    				</p>
-    				<div class="col s12">
-    					<a class="waves-effect waves-light btn"><i class="material-icons right">cloud</i>button</a>
-    				</div>
-      		</div>
-   		</form>
+<header class="formHead">
+	<div class="container">
+		<div class="row">
+			<div class="col s12">
+				<h2>Вопрос/ответ</h2>
+			</div>
+		</div>
 	</div>
-</div>
-<footer class="mainFooter">
+</header>
+<section class="qaFrom">
+	<div class="container">
+		<div class="row">
+			<form class="col s12" id="form" action="javascript:void(0);" onsubmit="ajax()">
+      			<div class="row">
+        				<div class="input-field col s6">
+          					<i class="material-icons prefix">account_circle</i>
+          					<input id="icon_prefix" type="text" class="validate" name="username" required>
+          					<label for="icon_prefix">First Name*</label>
+        				</div>
+        				<div class="input-field col s6">
+        					<i class="material-icons prefix">email</i>
+          					<input id="email" type="email" class="validate" name="email" required>
+          					<label for="email" data-error="wrong" data-success="right">Email*</label>
+        				</div>
+        				<div class="input-field col s12">
+        					<i class="material-icons prefix">mode_edit</i>
+          					<input id="text" type="text" class="validate" name="theme">
+          					<label for="text">Заголовок*</label>
+        				</div>
+        				<div class="input-field col s12">
+        					<i class="material-icons prefix">mode_edit</i>
+        					<textarea id="textarea1" class="materialize-textarea" name="text"></textarea>
+          					<label for="textarea1">Textarea*</label>
+        				</div>
+        			 	<p>
+      					<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+      					<label for="filled-in-box">Filled in</label>
+    					</p>
+    					<div class="col s12">
+						<button class="btn waves-effect waves-light" type="submit" name="send" value="send">Submit
+    							<i class="material-icons right">send</i>
+  						</button>
+    					</div>
+      			</div>
+   			</form>
+   			<div class="col s12" id="results"></div>
+		</div>
+	</div>
+</section>
+<footer class="mainFooter page-footer red darken-1">
 
 </footer>
-      <div class="hidden">
+<div class="hidden">
             <!--[if lt IE 9]>
-                <script src="<?= Config::getRootPath();?>libs/html5shiv/es5-shim.min.js"></script>
-                <script src="<?= Config::getRootPath();?>libs/html5shiv/html5shiv.min.js"></script>
-                <script src="<?= Config::getRootPath();?>libs/html5shiv/html5shiv-printshiv.min.js"></script>
-                <script src="<?= Config::getRootPath();?>libs/respond/respond.min.js"></script>
+                <script src="libs/html5shiv/es5-shim.min.js"></script>
+                <script src="libs/html5shiv/html5shiv.min.js"></script>
+                <script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+                <script src="libs/respond/respond.min.js"></script>
             <![endif]-->
             <script src="libs/jquery/jquery-2.1.3.min.js"></script>
             <script src="libs/materialize/js/materialize.min.js"></script>
             <script src="libs/animate/animate-css.js"></script>
             <script src="libs/jqBootstrapValidation/jqBootstrapValidation.js"></script>
             <script src="js/common.js"></script>
-      </div>
+</div>
 </body>
 </html>
 
