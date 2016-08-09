@@ -1,3 +1,14 @@
+<?php
+	ini_set('display_errors', 1);
+	$data = [];
+	if(isset($_POST['username']))
+	{
+		$data['username'] = $_POST['username'];
+		echo json_encode($data);
+	}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +32,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col s12">
-				<h2>Вопрос/ответ</h2>
+				<div class="valign-wrapper">
+					<h2 class="center-align">Вопрос/ответ</h2>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -43,20 +56,20 @@
         				</div>
         				<div class="input-field col s12">
         					<i class="material-icons prefix">mode_edit</i>
-          					<input id="text" type="text" class="validate" name="theme">
+          					<input id="text" type="text" class="validate" name="theme" required>
           					<label for="text">Заголовок*</label>
         				</div>
         				<div class="input-field col s12">
         					<i class="material-icons prefix">mode_edit</i>
-        					<textarea id="textarea1" class="materialize-textarea" name="text"></textarea>
+        					<textarea id="textarea1" class="materialize-textarea" name="text" required></textarea>
           					<label for="textarea1">Textarea*</label>
         				</div>
         			 	<p>
-      					<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
-      					<label for="filled-in-box">Filled in</label>
+      					<input type="checkbox" class="filled-in right-align" id="filled-in-box" checked="checked" name="subscribe">
+      					<label for="filled-in-box">Получить ответ на почту</label>
     					</p>
     					<div class="col s12">
-						<button class="btn waves-effect waves-light" type="submit" name="send" value="send">Submit
+						<button class="btn waves-effect waves-light right-align" type="submit" name="send" value="send">Отправить
     							<i class="material-icons right">send</i>
   						</button>
     					</div>

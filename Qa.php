@@ -19,7 +19,7 @@ class Qa
 
 	public function showPosts()
 	{
-		$query = 'SELECT* FROM qa.posts WHERE status = :status';
+		$query = 'SELECT u.username, q.* FROM qa.questions  q LEFT JOIN qa.users u ON u.id = q.userid WHERE status = :status';
 		$stmt = $this->db->prepare($query);
 		$stmt->execute(['status'=>1]);
 		while($row = $stmt->fetch())

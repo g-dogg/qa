@@ -2,10 +2,11 @@ function ajax() { //Ajax отправка формы
   var msg = $("#form").serialize();
   $.ajax({
     type: "POST",
-    url: "../index.php",
+    url: "index.php",
     data: msg,
     success: function(data) {
-      $("#results").html(data);
+      //$("#results").html(data);
+      alert("Success" + msg);
     },
     error:  function(xhr, str){
       alert("Возникла ошибка!");
