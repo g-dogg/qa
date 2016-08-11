@@ -24,6 +24,7 @@ class Qa
 		$stmt->execute(['status'=>1]);
 		while($row = $stmt->fetch())
 		{
+			echo "<div class=\"username\">" . $row['username'] . "</div>";
 			echo $row['theme'];
 			echo "<br>", $row['text'];
 		}
@@ -85,5 +86,21 @@ class Qa
 		}
 
 		echo json_encode($this->data);
+	}
+
+	public function deletePost()
+	{
+		$query = "DELETE FROM questions WHERE id=:id";
+		$postId = $this->validator->getValidatedData;
+		$stmt = $this->db->prepare($query);
+		try
+		{
+			$stmt->execute(['id'=>$postId[id]]);
+		}
+		catch (Exception $e)
+		{
+			echo $e;
+		}
+
 	}
 }
