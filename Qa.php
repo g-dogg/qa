@@ -87,7 +87,10 @@ class Qa
 
 		echo json_encode($this->data);
 	}
-
+	/**
+	 * Эти две говняные функции переписать бы, но тааак лееень....
+	 * @return [type] [description]
+	 */
 	public function deletePost()
 	{
 		$query = "DELETE FROM questions WHERE id=:id";
@@ -102,5 +105,20 @@ class Qa
 			echo $e;
 		}
 
+	}
+
+	public function confirmPost()
+	{
+		$query = "UPDATE questions SET status = 1 WHERE id=:id";
+		$postId = $this->validator->getValidatedData;
+		$stmt = $this->db->prepare($query);
+		try
+		{
+			$stmt->execute(['id'=>$postId[id]]);
+		}
+		catch (Exception $e)
+		{
+			echo $e;
+		}
 	}
 }

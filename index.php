@@ -1,5 +1,8 @@
 <?php
 	ini_set('display_errors', 1);
+
+	include_once 'bootstrap.php';
+
 	$data = [];
 	if(isset($_POST['username']))
 	{
