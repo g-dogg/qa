@@ -17,6 +17,11 @@ class Qa
 		$this->validator = $validator;
 	}
 
+	public function test()
+	{
+		var_dump($this);
+	}
+
 	public function showPosts()
 	{
 		$query = 'SELECT u.username, q.* FROM qa.questions  q LEFT JOIN qa.users u ON u.id = q.userid WHERE status = :status';
@@ -47,7 +52,7 @@ class Qa
 		$userQuery = "INSERT INTO qa.users ( 'username', 'email') VALUES (:username, :email)";
 		$questionQuery = "INSERT INTO qa.auestions ('theme', 'text', 'userid') VALUES (:theme, :text, :userid)";
 
-		$userValidData = $this->validator->getValidatedData;
+		$userValidData = $this->validator->getValidatedData();
 
 		if(FALSE === $this->isUserExists())
 		{

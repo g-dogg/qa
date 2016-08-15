@@ -2,14 +2,12 @@
 	ini_set('display_errors', 1);
 
 	include_once 'bootstrap.php';
-
+	$qa->test();
 	$data = [];
-	if(isset($_POST['username']))
+	if(isset($_POST['send']))
 	{
-		$data['username'] = $_POST['username'];
-		echo json_encode($data);
+		$qa->saveNewPost();
 	}
-
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +43,8 @@
 <section class="qaFrom">
 	<div class="container">
 		<div class="row">
-			<form class="col s12" id="form" action="javascript:void(0);" onsubmit="ajax()">
+			<!--<form class="col s12" id="form" action="javascript:void(0);" onsubmit="ajax()">-->
+			<form class="col s12" id="form" action="index.php" method="POST">
       			<div class="row">
         				<div class="input-field col s6">
           					<i class="material-icons prefix">account_circle</i>

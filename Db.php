@@ -23,7 +23,7 @@ class Db
 */
     public function getConfArray()
     {
-        $this->configArray = $this->config->getDbConfig();
+        return $this->config->getDbConfig();
     }
 
   private static $opt = [
@@ -31,11 +31,11 @@ class Db
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
   ];
 
-  public static function connect()
+  public function connect()
   {
       try
       {
-
+        $this->configArray = $this->getConfArray();
         $db = new PDO($this->configArray['dsn'], $this->configArray['username'], $this->configArray['password'], self::$opt);
         //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $db->exec("SET CHARACTER_SET_CLIENT=" . $this->configArray['charset']);

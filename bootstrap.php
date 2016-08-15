@@ -7,5 +7,7 @@ include_once 'validatorClass.php';
 
 $config = new Config;
 $db = new Db($config);
+
+$db->connect();
 $validator = new Validator;
 $qa = new Qa($db, $validator);
