@@ -2,8 +2,13 @@
 
 class Db
 {
+  /**
+   * [$config description]
+   * @var [type]
+   */
   private $config;
   private $configArray = [];
+  private $dbh;
 /**
  * еще не понятно, надо ли
  * @param Config $config [description]
@@ -36,11 +41,11 @@ class Db
       try
       {
         $this->configArray = $this->getConfArray();
-        $db = new PDO($this->configArray['dsn'], $this->configArray['username'], $this->configArray['password'], self::$opt);
-        //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $db->exec("SET CHARACTER_SET_CLIENT=" . $this->configArray['charset']);
-        $db->exec("SET CHARACTER_SET_RESULTS=" . $this->configArray['charset']);
-        $db->exec("SET COLLATION_CONNECTION='utf8_general_ci'");
+        $this->dbh = new PDO($this->configArray['dsn'], $this->configArray['username'], $this->configArray['password'], self::$opt);
+        //$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->dbh->exec("SET CHARACTER_SET_CLIENT=" . $this->configArray['charset']);
+        $this->dbh->exec("SET CHARACTER_SET_RESULTS=" . $this->configArray['charset']);
+        $this->dbh->exec("SET COLLATION_CONNECTION='utf8_general_ci'");
       }
       catch (PDOException $e)
       {

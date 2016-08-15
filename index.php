@@ -2,7 +2,7 @@
 	ini_set('display_errors', 1);
 
 	include_once 'bootstrap.php';
-	$qa->test();
+	//$qa->test();
 	$data = [];
 	if(isset($_POST['send']))
 	{
@@ -14,7 +14,7 @@
 <html>
 <head>
 	<meta charset="utf-8" >
-        <title></title>
+        <title><?php echo $config->getTitle();?></title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" >
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
