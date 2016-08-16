@@ -6,7 +6,7 @@ function ajax() { //Ajax отправка формы
     data: msg,
     success: function(data) {
       //$("#results").html(data);
-      alert("Success" + msg);
+      alert("Success " + msg);
     },
     error:  function(xhr, str){
       alert("Возникла ошибка!");

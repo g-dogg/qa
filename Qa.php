@@ -11,15 +11,15 @@ class Qa
 	 * @param Db        $db        [description]
 	 * @param Validator $validator [description]
 	 */
-	function __construct(Db $db, Validator $validator)
+	function __construct(Validator $validator)
 	{
-		$this->db = $db;
+		$this->db = Db::connect();
 		$this->validator = $validator;
 	}
 
 	public function test()
 	{
-		var_dump($this);
+		var_dump($this->db);
 	}
 
 	public function showPosts()
@@ -38,7 +38,7 @@ class Qa
 	public function isUserExists()
 	{
 		$query = 'SELECT COUNT(*) FROM qa.users WHERE username = :username LIMIT 1';
-		$stmt = $this->db->prepare($query, PDO::FETCH_ASSOC);
+		$stmt = Db::prepare($query, PDO::FETCH_ASSOC);
 		$stmt->execute(['username'=>$this->validator->getValidUsername]);
 		if(1 === $stmt->fetch())
 		{

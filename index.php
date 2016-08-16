@@ -1,9 +1,10 @@
 <?php
 	ini_set('display_errors', 1);
 
-	include_once 'bootstrap.php';
-	//$qa->test();
-	$data = [];
+	include 'bootstrap.php';
+
+	//$qa->showPosts();
+
 	if(isset($_POST['send']))
 	{
 		$qa->saveNewPost();
@@ -14,7 +15,7 @@
 <html>
 <head>
 	<meta charset="utf-8" >
-        <title><?php echo $config->getTitle();?></title>
+        <title>Вопрос.Ответ</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" >
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
@@ -43,8 +44,7 @@
 <section class="qaFrom">
 	<div class="container">
 		<div class="row">
-			<!--<form class="col s12" id="form" action="javascript:void(0);" onsubmit="ajax()">-->
-			<form class="col s12" id="form" action="index.php" method="POST">
+			<form class="col s12" id="form" action="javascript:void(0);" onsubmit="ajax()">
       			<div class="row">
         				<div class="input-field col s6">
           					<i class="material-icons prefix">account_circle</i>
@@ -67,7 +67,7 @@
           					<label for="textarea1">Textarea*</label>
         				</div>
         			 	<p>
-      					<input type="checkbox" class="filled-in right-align" id="filled-in-box" checked="checked" name="subscribe">
+      					<input type="checkbox" class="filled-in right-align" id="filled-in-box" checked="checked" name="subscribe" value="ok">
       					<label for="filled-in-box">Получить ответ на почту</label>
     					</p>
     					<div class="col s12">
