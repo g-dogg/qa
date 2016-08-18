@@ -4,7 +4,7 @@ class Qa
 {
 	private $db;
 	private $validator;
-	private $data = [];
+	private $data;
 
 	/**
 	 * [__construct description]
@@ -19,7 +19,9 @@ class Qa
 
 	public function test()
 	{
-		var_dump($this->db);
+		$this->data = json_encode($_POST);
+		echo $this->data;
+
 	}
 
 	public function showPosts()
@@ -49,7 +51,7 @@ class Qa
 
 	public function saveNewPost()
 	{
-		$userQuery = "INSERT INTO qa.users ( 'username', 'email') VALUES (:username, :email)";
+		$userQuery = "INSERT INTO qa.users ('username', 'email') VALUES (:username, :email)";
 		$questionQuery = "INSERT INTO qa.auestions ('theme', 'text', 'userid') VALUES (:theme, :text, :userid)";
 
 		$userValidData = $this->validator->getValidatedData();
