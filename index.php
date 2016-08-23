@@ -44,7 +44,7 @@
 <section class="qaFrom">
 	<div class="container">
 		<div class="row">
-			<form class="col s12" id="form" onsubmit="ajax()">
+			<form class="col s12" id="form" method="POST">
       			<div class="row">
         				<div class="input-field col s6">
           					<i class="material-icons prefix">account_circle</i>
@@ -71,13 +71,22 @@
       					<label for="filled-in-box">Получить ответ на почту</label>
     					</p>
     					<div class="col s12">
-						<button class="btn waves-effect waves-light right-align" type="submit" name="send" value="send">Отправить
+						<button class="btn waves-effect waves-light right-align" type="submit" name="send" value="send" onclick="sendMsg();">Отправить
     							<i class="material-icons right">send</i>
   						</button>
     					</div>
       			</div>
    			</form>
    			<div class="col s12" id="results"></div>
+		</div>
+	</div>
+</section>
+<section class="posts">
+	<div class="container">
+		<div class="row">
+			<div class="col s12">
+				<?php $qa->showPosts();?>
+			</div>
 		</div>
 	</div>
 </section>

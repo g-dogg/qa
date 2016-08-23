@@ -4,7 +4,7 @@ class Qa
 {
 	private $db;
 	private $validator;
-	private $data;
+	private $data=[];
 
 	/**
 	 * [__construct description]
@@ -19,8 +19,8 @@ class Qa
 
 	public function test()
 	{
-		$this->data = json_encode($_POST);
-		echo $this->data;
+		$this->data['success'] = $_POST['email'];
+		echo json_encode($this->data);
 
 	}
 
