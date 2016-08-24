@@ -2,8 +2,20 @@
 
 class Qa
 {
+	/**
+	 * [$db description]
+	 * @var Object Db
+	 */
 	private $db;
+	/**
+	 * [$validator description]
+	 * @var [type]
+	 */
 	private $validator;
+	/**
+	 * [$data description]
+	 * @var array
+	 */
 	private $data=[];
 
 	/**
@@ -19,8 +31,9 @@ class Qa
 
 	public function test()
 	{
-		$this->data['success'] = $_POST['email'];
-		echo json_encode($this->data);
+		//$this->data['success'] = $_POST['email'];
+		$userValidData = $this->validator->validateForm()->getValidatedData();
+		echo json_encode($userValidData);
 
 	}
 
@@ -39,27 +52,35 @@ class Qa
 
 	public function isUserExists()
 	{
-		$query = 'SELECT COUNT(*) FROM qa.users WHERE username = :username LIMIT 1';
-		$stmt = Db::prepare($query, PDO::FETCH_ASSOC);
-		$stmt->execute(['username'=>$this->validator->getValidUsername]);
-		if(1 === $stmt->fetch())
+		$query = 'SELECT * FROM users WHERE email = :email LIMIT 1';
+		$stmt = $this->prepare($query, PDO::FETCH_ASSOC);
+		$stmt->execute(['email'=>$this->validator->validateForm()->getValidEmail()]);
+		$row = $stmt->fetch();
+		if(!empty($row['email']))
 		{
-			return TRUE;
+			return $row['id'];
 		}
 		return FALSE;
 	}
 
 	public function saveNewPost()
 	{
-		$userQuery = "INSERT INTO qa.users ('username', 'email') VALUES (:username, :email)";
-		$questionQuery = "INSERT INTO qa.auestions ('theme', 'text', 'userid') VALUES (:theme, :text, :userid)";
+		$userQuery = "INSERT INTO users (username, email) VALUES (:username, :email)";
+		$questionQuery = "INSERT INTO questions (theme, text, userid) VALUES (:theme, :text, :userid)";
 
-		$userValidData = $this->validator->getValidatedData();
+		$userValidData = $this->validator->validateForm()->getValidatedData();
 
+		$stmt1 = $this->db->prepare($userQuery);
+		$stmt1->execute(['username'=>$userValidData['username'], 'email'=>$userValidData['email']]);
+		$lastUserId = $this->db->lastInsertId();
+		$stmt2 = $this->db->prepare($questionQuery);
+		$stmt2->execute(['theme'=>$userValidData['theme'], 'text'=>$userValidData['text'], 'userid'=>$lastUserId]);
+		$postID = $this->db->lastInsertId();
+
+		/*
 		if(FALSE === $this->isUserExists())
 		{
 			$this->data['message'] = 'Клиент с таким именем существует';
-			return $this->data;
 		}
 		else
 		{
@@ -69,11 +90,11 @@ class Qa
 			{
 				$stmt1->execute(['username'=>$userValidData['username'], 'email'=>$userValidData['email']]);
 				$lastUserId = $this->db->lastInsertId();
-
 			}
 			catch (Exception $e)
 			{
 				echo $e;
+				$this->data['message'] = '1';
 			}
 
 			$stmt2 = $this->db->prepare($questionQuery);
@@ -81,17 +102,17 @@ class Qa
 			try
 			{
 				$stmt2->execute(['theme'=>$userValidData['theme'], 'text'=>$userValidData['text'], 'userid'=>$lastUserId]);
-
 			}
 			catch (Exception $e)
 			{
 				echo $e;
+				$this->data['message'] = '2';
 			}
-
-
 			$this->data['message'] = 'Ваш запрос отправлен';
 		}
-
+		*/
+		$this->data['message'] = 'Ваш запрос отправлен';
+		$this->data['post'] = $postID;
 		echo json_encode($this->data);
 	}
 	/**

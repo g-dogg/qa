@@ -31,6 +31,11 @@ class Validator
 
 	public function getValidUsername()
 	{
-		return$this->validatedData['username'];
+		return $this->validatedData['username'];
+	}
+
+	public function getValidEmail()
+	{
+		return$this->validatedData['email'];
 	}
 }
