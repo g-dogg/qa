@@ -36,7 +36,10 @@ class Qa
 		echo json_encode($userValidData);
 
 	}
-
+	/**
+	 * [showPosts description]
+	 * @return [type] [description]
+	 */
 	public function showPosts()
 	{
 		$query = 'SELECT u.username, q.* FROM qa.questions  q LEFT JOIN qa.users u ON u.id = q.userid WHERE status = :status';
@@ -49,7 +52,10 @@ class Qa
 			echo "<br>", $row['text'];
 		}
 	}
-
+	/**
+	 * [isUserExists description]
+	 * @return boolean [description]
+	 */
 	public function isUserExists()
 	{
 		$query = 'SELECT * FROM users WHERE email = :email LIMIT 1';
@@ -62,7 +68,10 @@ class Qa
 		}
 		return FALSE;
 	}
-
+	/**
+	 * [saveNewPost description]
+	 * @return [type] [description]
+	 */
 	public function saveNewPost()
 	{
 		$userQuery = "INSERT INTO users (username, email) VALUES (:username, :email)";
@@ -71,11 +80,44 @@ class Qa
 		$userValidData = $this->validator->validateForm()->getValidatedData();
 
 		$stmt1 = $this->db->prepare($userQuery);
-		$stmt1->execute(['username'=>$userValidData['username'], 'email'=>$userValidData['email']]);
-		$lastUserId = $this->db->lastInsertId();
 		$stmt2 = $this->db->prepare($questionQuery);
-		$stmt2->execute(['theme'=>$userValidData['theme'], 'text'=>$userValidData['text'], 'userid'=>$lastUserId]);
-		$postID = $this->db->lastInsertId();
+		if(FALSE === $this->isUserExists())
+		{
+			try
+			{
+				$stmt1->execute(['username'=>$userValidData['username'], 'email'=>$userValidData['email']]);
+				$lastUserId = $this->db->lastInsertId();
+			}
+			catch(Exception $e)
+			{
+				$this->data['status'] = 0;
+			}
+
+			try
+			{
+				$stmt2->execute(['theme'=>$userValidData['theme'], 'text'=>$userValidData['text'], 'userid'=>$lastUserId]);
+			}
+			catch(Exception $e)
+			{
+				$this->data['status'] = 0;
+			}
+
+		}
+		else
+		{
+			try
+			{
+				$stmt2->execute(['theme'=>$userValidData['theme'], 'text'=>$userValidData['text'], 'userid'=>$this->isUserExists()]);
+			}
+			catch(Exception $e)
+			{
+				$this->data['status'] = 0;
+			}
+		}
+
+
+
+
 
 		/*
 		if(FALSE === $this->isUserExists())
@@ -112,7 +154,6 @@ class Qa
 		}
 		*/
 		$this->data['message'] = 'Ваш запрос отправлен';
-		$this->data['post'] = $postID;
 		echo json_encode($this->data);
 	}
 	/**
