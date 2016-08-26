@@ -76,7 +76,7 @@
 						</div>
 					</div>
 				</form>
-				<div class="col s12" id="results"></div>
+				<div class="col s12 result hidden" id="results"></div>
 			</div>
 		</div>
 	</section>

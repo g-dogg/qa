@@ -19,9 +19,9 @@ class Qa
 	private $data=[];
 
 	/**
-	 * [__construct description]
-	 * @param Db        $db        [description]
-	 * @param Validator $validator [description]
+	 * __construct - the constructor of Qa class
+	 * @param Db        $db
+	 * @param Validator $validator
 	 */
 	function __construct(Validator $validator)
 	{
@@ -40,18 +40,34 @@ class Qa
 	 * [showPosts description]
 	 * @return [type] [description]
 	 */
-	public function showPosts()
+	public function getPosts($status)
 	{
 		$query = 'SELECT u.username, q.* FROM qa.questions  q LEFT JOIN qa.users u ON u.id = q.userid WHERE status = :status';
 		$stmt = $this->db->prepare($query);
-		$stmt->execute(['status'=>1]);
-		while($row = $stmt->fetch())
+		$stmt->execute(['status'=>$status]);
+		return $stmt->fetch();
+		/*{
+
+		}*/
+	}
+
+	public function showApprovedPosts()
+	{
+		$approvedPosts = $this->showPosts(1);
+		foreach ($approvedPosts as $aP)
 		{
-			echo "<div class=\"username\">" . $row['username'] . "</div>";
-			echo $row['theme'];
-			echo "<br>", $row['text'];
+			echo "<div class=\"username\">" . $aP['username'] . "</div>";
+			echo $aP['theme'];
+			echo "<br>", $aP['text'];
 		}
 	}
+
+	public function getNewPostsForEdit()
+	{
+		$newPosts = $this->showPosts(0);
+
+	}
+
 	/**
 	 * [isUserExists description]
 	 * @return boolean [description]
@@ -59,8 +75,9 @@ class Qa
 	public function isUserExists()
 	{
 		$query = 'SELECT * FROM users WHERE email = :email LIMIT 1';
-		$stmt = $this->prepare($query, PDO::FETCH_ASSOC);
-		$stmt->execute(['email'=>$this->validator->validateForm()->getValidEmail()]);
+		$stmt = $this->db->prepare($query);
+		$valEmail = $this->validator->validateForm()->getValidEmail();
+		$stmt->execute(['email'=>$valEmail]);
 		$row = $stmt->fetch();
 		if(!empty($row['email']))
 		{
@@ -115,45 +132,7 @@ class Qa
 			}
 		}
 
-
-
-
-
-		/*
-		if(FALSE === $this->isUserExists())
-		{
-			$this->data['message'] = 'Клиент с таким именем существует';
-		}
-		else
-		{
-			$stmt1 = $this->db->prepare($userQuery);
-
-			try
-			{
-				$stmt1->execute(['username'=>$userValidData['username'], 'email'=>$userValidData['email']]);
-				$lastUserId = $this->db->lastInsertId();
-			}
-			catch (Exception $e)
-			{
-				echo $e;
-				$this->data['message'] = '1';
-			}
-
-			$stmt2 = $this->db->prepare($questionQuery);
-
-			try
-			{
-				$stmt2->execute(['theme'=>$userValidData['theme'], 'text'=>$userValidData['text'], 'userid'=>$lastUserId]);
-			}
-			catch (Exception $e)
-			{
-				echo $e;
-				$this->data['message'] = '2';
-			}
-			$this->data['message'] = 'Ваш запрос отправлен';
-		}
-		*/
-		$this->data['message'] = 'Ваш запрос отправлен';
+		$this->data['Success'] = 1;
 		echo json_encode($this->data);
 	}
 	/**
@@ -175,7 +154,10 @@ class Qa
 		}
 
 	}
-
+	/**
+	 * [confirmPost description]
+	 * @return [type] [description]
+	 */
 	public function confirmPost()
 	{
 		$query = "UPDATE questions SET status = 1 WHERE id=:id";
