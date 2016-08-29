@@ -3,13 +3,6 @@
 
 	include 'bootstrap.php';
 
-		//$qa->showPosts();
-
-	if(isset($_POST['send']))
-	{
-		$qa->saveNewPost();
-		//$qa->test();
-	}
 ?>
 
 <!DOCTYPE html>
@@ -43,40 +36,22 @@
 	<section class="qaFrom">
 		<div class="container">
 			<div class="row">
-				<form class="col s12" id="form" method="POST">
-					<div class="row">
-						<div class="input-field col s6">
-							<i class="material-icons prefix">account_circle</i>
-							<input id="icon_prefix" type="text" class="validate" name="username" required>
-							<label for="icon_prefix">First Name*</label>
-						</div>
-						<div class="input-field col s6">
-							<i class="material-icons prefix">email</i>
-							<input id="email" type="email" class="validate" name="email" required>
-							<label for="email" data-error="wrong" data-success="right">Email*</label>
-						</div>
-						<div class="input-field col s12">
-							<i class="material-icons prefix">mode_edit</i>
-							<input id="text" type="text" class="validate" name="theme" required>
-							<label for="text">Заголовок*</label>
-						</div>
-						<div class="input-field col s12">
-							<i class="material-icons prefix">mode_edit</i>
-							<textarea id="textarea1" class="materialize-textarea" name="text" required></textarea>
-							<label for="textarea1">Textarea*</label>
-						</div>
-						<p>
-							<input type="checkbox" class="filled-in right-align" id="filled-in-box" checked="checked" name="subscribe" value="ok">
-							<label for="filled-in-box">Получить ответ на почту</label>
-						</p>
-						<div class="col s12">
-							<button class="btn waves-effect waves-light right-align" type="submit" name="send" value="send" onclick="sendMsg();">Отправить
-								<i class="material-icons right">send</i>
-							</button>
-						</div>
-					</div>
-				</form>
-				<div class="col s12 result hidden" id="results"></div>
+				<table>
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>theme</th>
+							<th>text</th>
+							<th>btn1</th>
+							<th>btn2</th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php
+						$qa->getNewPostsForEdit();
+					?>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</section>
@@ -107,4 +82,3 @@
               </div>
             </body>
             </html>
-

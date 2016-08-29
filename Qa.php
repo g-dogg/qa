@@ -16,7 +16,7 @@ class Qa
 	 * [$data description]
 	 * @var array
 	 */
-	private $data=[];
+	private $posts=[];
 
 	/**
 	 * __construct - the constructor of Qa class
@@ -44,17 +44,20 @@ class Qa
 	{
 		$query = 'SELECT u.username, q.* FROM qa.questions  q LEFT JOIN qa.users u ON u.id = q.userid WHERE status = :status';
 		$stmt = $this->db->prepare($query);
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
 		$stmt->execute(['status'=>$status]);
-		return $stmt->fetch();
-		/*{
-
-		}*/
+		$this->posts = $stmt->fetchAll();
+		return $this;
 	}
 
+	/**
+	 * [showApprovedPosts description]
+	 * @return [type] [description]
+	 */
 	public function showApprovedPosts()
 	{
-		$approvedPosts = $this->showPosts(1);
-		foreach ($approvedPosts as $aP)
+		$this->getPosts(1);
+		foreach ($this->posts as $aP)
 		{
 			echo "<div class=\"username\">" . $aP['username'] . "</div>";
 			echo $aP['theme'];
@@ -64,8 +67,16 @@ class Qa
 
 	public function getNewPostsForEdit()
 	{
-		$newPosts = $this->showPosts(0);
 
+		$this->getPosts(0);
+
+		//var_dump($this->posts);
+
+		foreach ($this->posts as $nP)
+		{
+
+			echo "<tr><td>".$nP['id']."</td><td>".$nP['theme']."</td><td>".$nP['text']."</td><td><button class=\"btn waves-effect waves-light right-align\" type=\"submit\" value=\"".$nP['id']."\" name=\"delete\" onclick=\"\">Удалить<i class=\"material-icons right\">send</i></button></td><td><button class=\"btn waves-effect waves-light right-align\" type=\"submit\" value=\"".$nP['id']."\" name=\"delete\" onclick=\"\">Ответить<i class=\"material-icons right\">send</i></button></td></tr>";
+		}
 	}
 
 	/**
