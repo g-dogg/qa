@@ -90,7 +90,13 @@
 		</div>
 	</section>
 	<footer class="mainFooter page-footer red darken-1">
-
+		<div class="container">
+			<div class="row">
+				<div class="col s4">&nbsp;</div>
+				<div class="col s4">Форма "Вопрос/Ответ"</div>
+				<div class="col s4">&nbsp;</div>
+			</div>
+		</div>
 	</footer>
 	<div class="hidden">
             <!--[if lt IE 9]>

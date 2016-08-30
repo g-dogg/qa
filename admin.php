@@ -33,7 +33,7 @@
 			</div>
 		</div>
 	</header>
-	<section class="qaFrom">
+	<section class="postsTable">
 		<div class="container">
 			<div class="row">
 				<table>
@@ -52,15 +52,6 @@
 					?>
 					</tbody>
 				</table>
-			</div>
-		</div>
-	</section>
-	<section class="posts">
-		<div class="container">
-			<div class="row">
-				<div class="col s12">
-					<?php $qa->showApprovedPosts();?>
-				</div>
 			</div>
 		</div>
 	</section>

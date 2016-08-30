@@ -75,7 +75,7 @@ class Qa
 		foreach ($this->posts as $nP)
 		{
 
-			echo "<tr><td>".$nP['id']."</td><td>".$nP['theme']."</td><td>".$nP['text']."</td><td><button class=\"btn waves-effect waves-light right-align\" type=\"submit\" value=\"".$nP['id']."\" name=\"delete\" onclick=\"\">Удалить<i class=\"material-icons right\">send</i></button></td><td><button class=\"btn waves-effect waves-light right-align\" type=\"submit\" value=\"".$nP['id']."\" name=\"delete\" onclick=\"\">Ответить<i class=\"material-icons right\">send</i></button></td></tr>";
+			echo "<tr><td>".$nP['id']."</td><td>".$nP['theme']."</td><td>".$nP['text']."</td><td><button class=\"btn waves-effect waves-light right-align\" type=\"submit\" value=\"".$nP['id']."\" name=\"delete\">Удалить<i class=\"material-icons right\">send</i></button></td><td><button class=\"btn waves-effect waves-light right-align\" type=\"submit\" value=\"".$nP['id']."\" name=\"delete\">Ответить<i class=\"material-icons right\">send</i></button></td></tr>";
 		}
 	}
 
