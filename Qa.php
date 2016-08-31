@@ -3,17 +3,18 @@
 class Qa
 {
 	/**
-	 * [$db description]
 	 * @var Object Db
 	 */
 	private $db;
+
 	/**
-	 * [$validator description]
-	 * @var [type]
+	 *
+	 * @var Object validatorClass
 	 */
 	private $validator;
+
 	/**
-	 * [$data description]
+	 * $posts contains all strings from DB
 	 * @var array
 	 */
 	private $posts=[];
@@ -28,7 +29,10 @@ class Qa
 		$this->db = Db::connect();
 		$this->validator = $validator;
 	}
-
+	/**
+	 * will be delete
+	 * @return [type] [description]
+	 */
 	public function test()
 	{
 		//$this->data['success'] = $_POST['email'];
@@ -37,8 +41,8 @@ class Qa
 
 	}
 	/**
-	 * [showPosts description]
-	 * @return [type] [description]
+	 * @param  int $status 0 - new posts; 1 - approved posts
+	 * @return instance of Qa
 	 */
 	public function getPosts($status)
 	{
@@ -51,8 +55,8 @@ class Qa
 	}
 
 	/**
-	 * [showApprovedPosts description]
-	 * @return [type] [description]
+	 *  @return string
+	 *  @access public
 	 */
 	public function showApprovedPosts()
 	{
@@ -65,12 +69,14 @@ class Qa
 		}
 	}
 
+	/**
+	 *
+	 * @return string
+	 */
 	public function getNewPostsForEdit()
 	{
 
 		$this->getPosts(0);
-
-		//var_dump($this->posts);
 
 		foreach ($this->posts as $nP)
 		{
